@@ -12,7 +12,7 @@ class HabitTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.create(email='new_test@test.ru')
         self.habit = Habit.objects.create(user=self.user, place='Earth', time="14:00:00", action='Тренеровка',
-                                          is_pleasant=True, periodicity=7, execution_time='00:02:00', is_public=True)
+                                          is_pleasant=True, periodicity=3, execution_time='00:02:00', is_public=True)
         self.client.force_authenticate(user=self.user)
 
     def test_habit_retrieve(self):
@@ -34,7 +34,7 @@ class HabitTestCase(APITestCase):
             "time": "14:00:00",
             "action": "Тренировка",
             "is_pleasant": True,
-            "periodicity": 7,
+            "periodicity": 3,
             "execution_time": "00:02:00",
             "is_public": True
         }
@@ -55,7 +55,7 @@ class HabitTestCase(APITestCase):
         url = reverse('habits:habits-update', args=(self.habit.pk,))
         data = {
             "place": "Улица",
-            'periodicity': 7,
+            'periodicity': 2,
         }
         response = self.client.patch(url, data)
         data = response.json()

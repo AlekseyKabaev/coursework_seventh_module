@@ -12,6 +12,11 @@ class HabitCreateAPIView(CreateAPIView):
     serializer_class = HabitSerializer
     permission_classes = (IsAuthenticated,)
 
+    def perform_create(self, serializer):
+        habit = serializer.save()
+        habit.user = self.request.user
+        habit.save()
+
 
 class UserHabitListAPIView(ListAPIView):
     serializer_class = HabitSerializer
@@ -27,6 +32,9 @@ class PublicHabitListAPIView(ListAPIView):
     serializer_class = HabitSerializer
     pagination_class = CustomPagination
     permission_classes = (AllowAny,)
+
+    def get_queryset(self):
+        return Habit.objects.filter(is_public=True)
 
 
 class HabitRetrieveAPIView(RetrieveAPIView):

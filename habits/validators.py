@@ -41,7 +41,5 @@ class FrequencyValidator:
     """Валидация по частоте исполнения полезной привычки / действия."""
 
     def __call__(self, habit):
-        if habit.get("periodicity") < 7:
-            raise ValidationError("Привычку нельзя выполнять реже 1 раза в 7 дней.")
-        if habit.get("periodicity") > 7:
-            raise ValidationError("Привычку нельзя выполнять чаще 1 раза в 7 дней.")
+        if habit.get("periodicity") < 1 or habit.get("periodicity") > 7:
+            raise ValidationError("Периодичность привычки должна быть от 1 до 7 дней.")
